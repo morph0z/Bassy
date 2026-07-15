@@ -17,7 +17,7 @@ dnf5 install -y \
 
 # Install Gradle manually
 GRADLE_VERSION="8.8"
-mkdir -p /opt/gradle
+install -d /opt/gradle
 curl -L --fail --retry 3 \
     "https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip" \
     -o /tmp/gradle.zip || { echo "Gradle download failed"; exit 1; }
