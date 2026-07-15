@@ -2,26 +2,70 @@
 
 set -ouex pipefail
 
-# Copy the contents of system_files/ of the git repo to /
+# Copy system files into image
 cp -avf "/ctx/system_files"/. /
 
 ### Install packages
 
-# Packages can be installed from any enabled yum repo on the image.
-# RPMfusion repos are available by default in ublue main images
-# List of rpmfusion packages can be found here:
-# https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/43/x86_64/repoview/index.html&protocol=https&redirect=1
+# Development tools
+dnf5 install -y \
+    cmake \
+    ninja-build \
+    java-devel \
+    git \
+    gcc \
+    gcc-c++ \
+    make \
+    pkgconf-pkg-config \
+    libglvnd-devel
 
-# this installs a package from fedora repos
-dnf5 install -y tmux
+# Wine compatibility tools
+dnf5 install -y \
+    winetricks \
+    protontricks \
+    dxvk \
+    vkd3d-proton \
+    vulkan-loader \
+    mesa-vulkan-drivers \
+    mesa-vulkan-drivers.i686 \
+    wine-mono \
+    wine-gecko
 
-# Use a COPR Example:
-#
-# dnf5 -y copr enable ublue-os/staging
-# dnf5 -y install package
-# Disable COPRs so they don't end up enabled on the final image:
-# dnf5 -y copr disable ublue-os/staging
+# Audio / music production dependencies
+dnf5 install -y \
+    pipewire-jack-audio-connection-kit \
+    jack-audio-connection-kit \
+    alsa-lib-devel \
+    libsndfile
 
-#### Example for enabling a System Unit File
+# yabridge
+mkdir -p /opt/yabridge
+
+curl -L \
+    https://github.com/robbert-vdh/yabridge/releases/latest/download/yabridge.tar.gz \
+    -o /tmp/yabridge.tar.gz
+
+tar -xf /tmp/yabridge.tar.gz -C /opt/yabridge --strip-components=1
+
+ln -sf /opt/yabridge/yabridge /usr/local/bin/yabridge
+ln -sf /opt/yabridge/yabridgectl /usr/local/bin/yabridgectl
+
+# Flatpak applications
+flatpak install -y flathub \
+    com.discordapp.Discord \
+    com.blender.Blender \
+    org.audacityteam.Audacity \
+    org.godotengine.Godot \
+    com.modrinth.ModrinthApp \
+    md.obsidian.Obsidian \
+    org.prismlauncher.PrismLauncher \
+    com.valvesoftware.Steam \
+    ar.com.tuxguitar.TuxGuitar
+
+### Enable services
 
 systemctl enable podman.socket
+
+### Cleanup
+
+dnf5 clean all
