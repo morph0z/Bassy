@@ -49,8 +49,7 @@ flatpak install -y flathub \
     com.modrinth.ModrinthApp \
     md.obsidian.Obsidian \
     org.prismlauncher.PrismLauncher \
-    ar.com.tuxguitar.TuxGuitar \
-    com.spotify.Client || { echo "Flatpak installation failed"; exit 1; }
+    ar.com.tuxguitar.TuxGuitar || { echo "Flatpak installation failed"; exit 1; }
 
 ### Enable services
 
