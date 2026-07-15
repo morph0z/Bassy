@@ -15,21 +15,6 @@ dnf5 install -y \
 dnf5 install -y \
     maven
 
-# Install Gradle manually
-GRADLE_VERSION="8.8"
-curl -L --fail --retry 3 \
-    "https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip" \
-    -o /tmp/gradle.zip || { echo "Gradle download failed"; exit 1; }
-
-unzip -q /tmp/gradle.zip -d /opt || { echo "Gradle extraction failed"; exit 1; }
-rm -f /tmp/gradle.zip
-
-ln -sf /opt/gradle-${GRADLE_VERSION}/bin/gradle /usr/local/bin/gradle
-unzip -q /tmp/gradle.zip -d /opt/gradle || { echo "Gradle extraction failed"; exit 1; }
-rm -f /tmp/gradle.zip
-
-ln -sf /opt/gradle/gradle-${GRADLE_VERSION}/bin/gradle /usr/local/bin/gradle
-
 # Development tools - Game development (Godot)
 dnf5 install -y \
     godot \
