@@ -11,7 +11,7 @@ dnf5 install -y \
     "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm" \
     "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
 
-# Development tools - Minecraft modding
+# Development tools - Minecraft modding maven
 dnf5 install -y \
     maven
 
