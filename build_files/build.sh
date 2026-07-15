@@ -11,47 +11,56 @@ dnf5 install -y \
     "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm" \
     "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
 
-# Development tools
+# Development tools - Minecraft modding
 dnf5 install -y \
-    cmake \
-    ninja-build \
-    java-devel \
-    git \
-    gcc \
-    gcc-c++ \
-    make \
-    pkgconf-pkg-config \
-    libglvnd-devel
+    gradle \
+    maven
 
-# Wine helpers
+# Development tools - Game development (Godot)
 dnf5 install -y \
-    winetricks \
-    protontricks \
-    vulkan-loader \
-    vulkan-loader.i686 \
-    mesa-vulkan-drivers \
-    mesa-vulkan-drivers.i686
+    godot \
+    scons
 
-# Audio / music production dependencies
+# Development tools - FL Studio composition / Audio production
 dnf5 install -y \
-    pipewire-jack-audio-connection-kit \
-    jack-audio-connection-kit \
-    alsa-lib-devel \
+    wine \
+    wine-mono \
+    wine-gecko \
+    bottle \
+    calf-studio-gear \
+    x42-plugins \
+    helm \
+    lv2 \
+    lilv \
+    lilv-devel \
+    suil \
+    suil-devel \
+    liblo-devel \
+    fftw-devel \
+    soundfont-utils \
+    timidity++ \
+    fluidsynth \
+    fluidsynth-devel \
     libsndfile
 
-# yabridge
-mkdir -p /opt/yabridge
+# yabridge (VST bridge for Windows plugins on Linux)
+mkdir /opt/yabridge
 
-curl -L \
+curl -L --fail --retry 3 \
     https://github.com/robbert-vdh/yabridge/releases/latest/download/yabridge.tar.gz \
-    -o /tmp/yabridge.tar.gz
+    -o /tmp/yabridge.tar.gz || { echo "yabridge download failed"; exit 1; }
 
-tar -xf /tmp/yabridge.tar.gz -C /opt/yabridge --strip-components=1
+tar -xf /tmp/yabridge.tar.gz -C /opt/yabridge --strip-components=1 || { echo "tar extraction failed"; exit 1; }
+rm -f /tmp/yabridge.tar.gz
+
+[[ -f /opt/yabridge/yabridge ]] || { echo "yabridge executable not found"; exit 1; }
+[[ -f /opt/yabridge/yabridgectl ]] || { echo "yabridgectl executable not found"; exit 1; }
 
 ln -sf /opt/yabridge/yabridge /usr/local/bin/yabridge
 ln -sf /opt/yabridge/yabridgectl /usr/local/bin/yabridgectl
 
 # Flatpak applications
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo || true
 flatpak install -y flathub \
     com.discordapp.Discord \
     com.blender.Blender \
@@ -60,8 +69,8 @@ flatpak install -y flathub \
     com.modrinth.ModrinthApp \
     md.obsidian.Obsidian \
     org.prismlauncher.PrismLauncher \
-    com.valvesoftware.Steam \
-    ar.com.tuxguitar.TuxGuitar
+    ar.com.tuxguitar.TuxGuitar \
+    com.spotify.Client || { echo "Flatpak installation failed"; exit 1; }
 
 ### Enable services
 
