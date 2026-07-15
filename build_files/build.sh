@@ -40,9 +40,9 @@ dnf5 install -y \
     fluidsynth-devel
 
 ### Enable services
-
 systemctl enable podman.socket
 
-### Cleanup
-
+### Aggressive Cleanup
 dnf5 clean all
+dnf5 remove -y $(dnf5 repoquery --extras)  # Remove packages not in base repos
+rm -rf /var/cache/dnf/* /tmp/* /var/tmp/*
