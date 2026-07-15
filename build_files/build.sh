@@ -11,6 +11,8 @@ dnf5 install -y \
     "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm" \
     "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
 
+dnf5 update -y
+
 # Development tools - Minecraft modding
 dnf5 install -y \
     maven
@@ -24,10 +26,7 @@ dnf5 install -y \
 dnf5 install -y \
     wine \
     wine-mono \
-    wine-gecko \
-    bottle \
     calf-studio-gear \
-    x42-plugins \
     helm \
     lv2 \
     lilv \
@@ -39,8 +38,7 @@ dnf5 install -y \
     soundfont-utils \
     timidity++ \
     fluidsynth \
-    fluidsynth-devel \
-    libsndfile
+    fluidsynth-devel
 
 # yabridge (VST bridge for Windows plugins on Linux)
 mkdir /opt/yabridge
