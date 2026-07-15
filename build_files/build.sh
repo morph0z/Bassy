@@ -26,7 +26,6 @@ dnf5 install -y \
 dnf5 install -y \
     wine \
     wine-mono \
-    calf-studio-gear \
     helm \
     lv2 \
     lilv \
