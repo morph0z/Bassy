@@ -11,17 +11,20 @@ dnf5 install -y \
     "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm" \
     "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
 
-# Development tools - Minecraft modding maven
+# Development tools - Minecraft modding
 dnf5 install -y \
     maven
 
 # Install Gradle manually
 GRADLE_VERSION="8.8"
-install -d /opt/gradle
 curl -L --fail --retry 3 \
     "https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip" \
     -o /tmp/gradle.zip || { echo "Gradle download failed"; exit 1; }
 
+unzip -q /tmp/gradle.zip -d /opt || { echo "Gradle extraction failed"; exit 1; }
+rm -f /tmp/gradle.zip
+
+ln -sf /opt/gradle-${GRADLE_VERSION}/bin/gradle /usr/local/bin/gradle
 unzip -q /tmp/gradle.zip -d /opt/gradle || { echo "Gradle extraction failed"; exit 1; }
 rm -f /tmp/gradle.zip
 
