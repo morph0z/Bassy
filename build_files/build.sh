@@ -23,17 +23,14 @@ dnf5 install -y \
     pkgconf-pkg-config \
     libglvnd-devel
 
-# Wine compatibility tools
+# Wine helpers
 dnf5 install -y \
     winetricks \
     protontricks \
-    dxvk \
-    vkd3d-proton \
     vulkan-loader \
+    vulkan-loader.i686 \
     mesa-vulkan-drivers \
-    mesa-vulkan-drivers.i686 \
-    wine-mono \
-    wine-gecko
+    mesa-vulkan-drivers.i686
 
 # Audio / music production dependencies
 dnf5 install -y \
