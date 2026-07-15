@@ -7,6 +7,10 @@ cp -avf "/ctx/system_files"/. /
 
 ### Install packages
 
+dnf5 install -y \
+    "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm" \
+    "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
+
 # Development tools
 dnf5 install -y \
     cmake \
