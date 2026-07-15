@@ -39,22 +39,6 @@ dnf5 install -y \
     fluidsynth \
     fluidsynth-devel
 
-# yabridge (VST bridge for Windows plugins on Linux)
-mkdir /opt/yabridge
-
-curl -L --fail --retry 3 \
-    https://github.com/robbert-vdh/yabridge/releases/latest/download/yabridge.tar.gz \
-    -o /tmp/yabridge.tar.gz || { echo "yabridge download failed"; exit 1; }
-
-tar -xf /tmp/yabridge.tar.gz -C /opt/yabridge --strip-components=1 || { echo "tar extraction failed"; exit 1; }
-rm -f /tmp/yabridge.tar.gz
-
-[[ -f /opt/yabridge/yabridge ]] || { echo "yabridge executable not found"; exit 1; }
-[[ -f /opt/yabridge/yabridgectl ]] || { echo "yabridgectl executable not found"; exit 1; }
-
-ln -sf /opt/yabridge/yabridge /usr/local/bin/yabridge
-ln -sf /opt/yabridge/yabridgectl /usr/local/bin/yabridgectl
-
 # Flatpak applications
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo || true
 flatpak install -y flathub \
