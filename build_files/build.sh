@@ -43,7 +43,7 @@ dnf5 install -y \
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo || true
 flatpak install -y flathub \
     com.discordapp.Discord \
-    com.blender.Blender \
+    org.blender.Blender \
     org.audacityteam.Audacity \
     org.godotengine.Godot \
     com.modrinth.ModrinthApp \
