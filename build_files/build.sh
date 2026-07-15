@@ -39,18 +39,6 @@ dnf5 install -y \
     fluidsynth \
     fluidsynth-devel
 
-# Flatpak applications
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo || true
-flatpak install -y flathub \
-    com.discordapp.Discord \
-    org.blender.Blender \
-    org.audacityteam.Audacity \
-    org.godotengine.Godot \
-    com.modrinth.ModrinthApp \
-    md.obsidian.Obsidian \
-    org.prismlauncher.PrismLauncher \
-    ar.com.tuxguitar.TuxGuitar || { echo "Flatpak installation failed"; exit 1; }
-
 ### Enable services
 
 systemctl enable podman.socket
